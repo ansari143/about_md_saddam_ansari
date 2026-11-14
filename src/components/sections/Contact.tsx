@@ -1,11 +1,24 @@
-import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { ArrowUpRight, CalendarDays, Mail, MapPin } from "lucide-react";
 import { githubUrl, profile } from "@/data/site";
 import { GitHubIcon, LinkedInIcon } from "../ui/BrandIcons";
+import { AskAIButton } from "../AskAIButton";
+import { CopyEmailButton } from "../CopyEmailButton";
 import { ButtonLink } from "../ui/Button";
 import { Reveal } from "../ui/Reveal";
 
 export function Contact() {
   const links = [
+    ...(profile.bookingUrl
+      ? [
+          {
+            label: "Book a call",
+            value: "Pick a time on Calendly",
+            href: profile.bookingUrl,
+            icon: <CalendarDays className="h-5 w-5" aria-hidden />,
+            external: true,
+          },
+        ]
+      : []),
     {
       label: "Email",
       value: profile.email,
@@ -74,10 +87,12 @@ export function Contact() {
               ))}
             </ul>
 
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <ButtonLink href={`mailto:${profile.email}?subject=${encodeURIComponent("Opportunity for an Enterprise AI Architect")}`}>
                 <Mail className="h-4 w-4" aria-hidden /> Send an email
               </ButtonLink>
+              <CopyEmailButton email={profile.email} />
+              <AskAIButton />
             </div>
           </div>
         </Reveal>

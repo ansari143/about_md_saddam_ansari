@@ -18,7 +18,7 @@ export function ScrollToTop() {
       type="button"
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-6 right-6 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-surface/90 text-fg shadow-lg backdrop-blur transition-all duration-300 hover:border-cyan/60 ${
+      className={`fixed right-4 bottom-20 z-40 sm:right-6 sm:bottom-24 inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-surface/90 text-fg shadow-lg backdrop-blur transition-all duration-300 hover:border-cyan/60 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
       }`}
       tabIndex={visible ? 0 : -1}

@@ -1,5 +1,6 @@
 import { Briefcase, MapPin } from "lucide-react";
-import { disclosure, employer, experience } from "@/data/site";
+import { disclosure, employer, experience, profile } from "@/data/site";
+import { RoleHighlights } from "../RoleHighlights";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { Tag } from "../ui/Tag";
@@ -9,9 +10,25 @@ export function Experience() {
     <Section
       id="experience"
       eyebrow="Experience"
-      title="14+ years of building and shipping enterprise systems"
+      title={`${profile.yearsExperience} years of building and shipping enterprise systems`}
       intro="Every role at Tata Consultancy Services, most recent first. Client work is described at a public-safe level."
     >
+      <Reveal>
+        <dl className="mb-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
+          {[
+            { k: "Total experience", v: `${profile.yearsExperience} years` },
+            { k: "At TCS since", v: String(profile.careerStartYear) },
+            { k: "Roles held", v: String(experience.length) },
+            { k: "Countries", v: "USA · Canada · UK · India" },
+          ].map((s) => (
+            <div key={s.k} className="flex flex-col-reverse bg-surface px-5 py-4">
+              <dt className="mt-1 text-xs text-subtle">{s.k}</dt>
+              <dd className="font-display text-base font-semibold text-fg sm:text-lg">{s.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </Reveal>
+
       <Reveal>
         <div className="mb-10 flex flex-wrap items-center gap-3">
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line-strong bg-surface">
@@ -43,7 +60,14 @@ export function Experience() {
                 <article className={`card p-6 sm:p-7 ${current ? "border-line-strong" : ""}`}>
                   <header className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <h3 className="font-display text-lg font-semibold text-fg sm:text-xl">{role.title}</h3>
+                      <h3 className="flex flex-wrap items-center gap-2 font-display text-lg font-semibold text-fg sm:text-xl">
+                        {role.title}
+                        {current && (
+                          <span className="rounded-full border border-emerald-500/40 px-2 py-0.5 font-sans text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+                            Current
+                          </span>
+                        )}
+                      </h3>
                       {role.focus && <p className="text-sm font-medium text-cyan">{role.focus}</p>}
                     </div>
                     <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 text-sm text-subtle sm:flex-col sm:items-end">
@@ -61,14 +85,7 @@ export function Experience() {
                       <span className="text-muted">{role.ownership}</span>
                     </p>
                   )}
-                  <ul className="mt-4 space-y-2.5">
-                    {highlights.map((h) => (
-                      <li key={h} className="flex gap-3 text-sm leading-relaxed text-muted">
-                        <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-cyan" />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <RoleHighlights items={highlights} />
                   <div className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
                     {role.tech.map((t) => (
                       <Tag key={t}>{t}</Tag>

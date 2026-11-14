@@ -1,5 +1,6 @@
 import { Download, ExternalLink, FileText } from "lucide-react";
 import { profile } from "@/data/site";
+import { PrintResumeButton } from "../PrintResumeButton";
 import { ButtonLink } from "../ui/Button";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
@@ -15,10 +16,11 @@ export function Resume({ hasResume }: { hasResume: boolean }) {
                 <FileText className="h-4 w-4 text-cyan" aria-hidden />
                 {profile.name} — {profile.title}
               </p>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <ButtonLink href={profile.resumePath} target="_blank" rel="noopener noreferrer" variant="secondary">
                   <ExternalLink className="h-4 w-4" aria-hidden /> Open
                 </ButtonLink>
+                <PrintResumeButton href={profile.resumePath} />
                 <ButtonLink href={profile.resumePath} download>
                   <Download className="h-4 w-4" aria-hidden /> Download PDF
                 </ButtonLink>

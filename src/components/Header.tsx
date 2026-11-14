@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { CalendarDays, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navItems, profile } from "@/data/site";
 import { ThemeToggle } from "./ThemeToggle";
@@ -60,7 +60,7 @@ export function Header() {
           <span className="hidden font-display text-sm font-medium text-fg sm:inline">{profile.displayName}</span>
         </a>
 
-        <ul className="hidden items-center gap-1 lg:flex">
+        <ul className="hidden items-center gap-0.5 xl:flex">
           {navItems.map((item) => (
             <li key={item.id}>
               <a
@@ -77,10 +77,21 @@ export function Header() {
         </ul>
 
         <div className="flex items-center gap-2">
+          {profile.bookingUrl && (
+            <a
+              href={profile.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden items-center gap-1.5 rounded-lg bg-accent px-3 py-2 text-sm font-medium text-accent-fg transition-all hover:brightness-110 sm:inline-flex"
+            >
+              <CalendarDays className="h-4 w-4" aria-hidden /> Book a Call
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
+          )}
           <ThemeToggle />
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-line text-muted hover:text-fg lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-line text-muted hover:text-fg xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -92,7 +103,7 @@ export function Header() {
       </nav>
 
       {open && (
-        <div id="mobile-nav" className="border-t border-line lg:hidden">
+        <div id="mobile-nav" className="border-t border-line xl:hidden">
           <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-1 px-4 py-4 sm:px-6">
             {navItems.map((item) => (
               <li key={item.id}>
@@ -105,6 +116,19 @@ export function Header() {
                 </a>
               </li>
             ))}
+            {profile.bookingUrl && (
+              <li className="col-span-2 sm:hidden">
+                <a
+                  href={profile.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 flex items-center justify-center gap-2 rounded-lg bg-accent px-3 py-2.5 text-sm font-medium text-accent-fg"
+                >
+                  <CalendarDays className="h-4 w-4" aria-hidden /> Book a Call
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       )}

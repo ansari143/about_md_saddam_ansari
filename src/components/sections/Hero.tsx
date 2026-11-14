@@ -1,6 +1,8 @@
-import { ArrowRight, Download, Mail, MapPin } from "lucide-react";
+import { ArrowRight, CalendarDays, Download, Mail, MapPin } from "lucide-react";
 import { disclosure, heroStats, profile } from "@/data/site";
+import { AskAIButton } from "../AskAIButton";
 import { HeroVisual } from "../HeroVisual";
+import { CountUp } from "../ui/CountUp";
 import { ButtonLink } from "../ui/Button";
 import { Reveal } from "../ui/Reveal";
 
@@ -39,7 +41,13 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
           </Reveal>
           <Reveal delay={0.15}>
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="#experience">
+              {profile.bookingUrl && (
+                <ButtonLink href={profile.bookingUrl} target="_blank" rel="noopener noreferrer">
+                  <CalendarDays className="h-4 w-4" aria-hidden /> Book a Call
+                  <span className="sr-only">(opens in a new tab)</span>
+                </ButtonLink>
+              )}
+              <ButtonLink href="#experience" variant={profile.bookingUrl ? "secondary" : "primary"}>
                 View Experience <ArrowRight className="h-4 w-4" aria-hidden />
               </ButtonLink>
               <ButtonLink href="#projects" variant="secondary">
@@ -54,6 +62,9 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
                   <Download className="h-4 w-4" aria-hidden /> Resume
                 </ButtonLink>
               )}
+            </div>
+            <div className="mt-3 -ml-4 flex flex-wrap gap-1">
+              <AskAIButton />
               <ButtonLink href="#contact" variant="ghost">
                 <Mail className="h-4 w-4" aria-hidden /> Contact
               </ButtonLink>
@@ -64,7 +75,9 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
               {stats.map((s) => (
                 <div key={s.label} className="flex flex-col-reverse">
                   <dt className="mt-1 text-xs leading-snug text-subtle">{s.label}</dt>
-                  <dd className="font-display text-2xl font-semibold text-fg sm:text-3xl">{s.value}</dd>
+                  <dd className="font-display text-2xl font-semibold text-fg sm:text-3xl">
+                    <CountUp value={s.value} />
+                  </dd>
                 </div>
               ))}
             </dl>

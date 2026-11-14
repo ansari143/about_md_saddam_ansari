@@ -1,6 +1,8 @@
+import { AskAI } from "@/components/AskAI";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { About } from "@/components/sections/About";
 import { Architecture } from "@/components/sections/Architecture";
@@ -21,6 +23,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd hasPhoto={hasPhoto} />
+      <ScrollProgress />
       <Header />
       <main id="main">
         <Hero hasResume={hasResume} />
@@ -35,6 +38,7 @@ export default function HomePage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <AskAI />
     </>
   );
 }

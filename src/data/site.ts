@@ -32,6 +32,10 @@ export type Profile = {
   resumePath: string;
   /** Path under /public, e.g. "/profile.jpg". Leave empty to show initials. */
   photoPath: string;
+  /** Booking page (Calendly etc.). Leave empty to hide all "Book a Call" buttons. */
+  bookingUrl: string;
+  /** First year of professional experience; used to compute total years. */
+  careerStartYear: number;
   yearsExperience: string;
   workAuthorization: string[];
 };
@@ -48,7 +52,10 @@ export const profile: Profile = {
   githubUsername: "",
   resumePath: "/resume.pdf",
   photoPath: "",
-  yearsExperience: "14+",
+  bookingUrl: "https://calendly.com/saddamansari52",
+  careerStartYear: 2012,
+  // Computed at build time: years since careerStartYear (14+ in 2026).
+  yearsExperience: `${new Date().getFullYear() - 2012}+`,
   workAuthorization: [
     "Canadian citizen — eligible to work in Canada without a work permit.",
     "United States — employment requires appropriate TN work authorization, subject to role eligibility.",
@@ -85,7 +92,7 @@ export const navItems = [
 export type Stat = { value: string; label: string; metric?: boolean };
 
 export const heroStats: Stat[] = [
-  { value: "14+", label: "Years of enterprise engineering" },
+  { value: `${new Date().getFullYear() - 2012}+`, label: "Years of enterprise engineering" },
   { value: "4", label: "Countries: USA, Canada, UK, India" },
   { value: "~100K", label: "Employees within platform reach", metric: true },
   { value: "30K", label: "Daily active users", metric: true },
