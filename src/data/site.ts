@@ -510,6 +510,137 @@ export const internalCertifications: InternalCertification[] = [
   { name: "Java Assessment – E1", area: "Java", date: "Jun 2015" },
 ];
 
+export type CourseGroup = { area: string; icon: string; courses: { name: string; date: string }[] };
+
+/**
+ * Technical courses completed on TCS's internal learning platform (iEvolve),
+ * limited to skills that appear on the resume. Newest first within each group.
+ */
+export const internalCourses: CourseGroup[] = [
+  {
+    area: "Generative AI & prompt engineering",
+    icon: "sparkles",
+    courses: [
+      { name: "Foundational Generative AI", date: "2024" },
+      { name: "Generative AI on Azure OpenAI (course + assessment)", date: "Oct 2023" },
+      { name: "Generative AI – E1 assessment", date: "Oct 2023" },
+      { name: "Introduction to OpenAI API & ChatGPT API", date: "Sep 2023" },
+      { name: "The Complete Prompt Engineering for AI Bootcamp", date: "Sep 2023" },
+      { name: "Generative AI for Beginners", date: "Jul 2023" },
+      { name: "Generative AI – E0 assessment", date: "Jul 2023" },
+      { name: "The Next Frontier: Generative AI", date: "Jul 2023" },
+      { name: "Prompt Engineering for Everyone Bootcamp (Udemy)", date: "Jul 2023" },
+    ],
+  },
+  {
+    area: "AI-assisted engineering",
+    icon: "code",
+    courses: [{ name: "GitHub Copilot for Beginners: AI Coding Crash Course (Udemy)", date: "2024" }],
+  },
+  {
+    area: "Microsoft Azure",
+    icon: "cloud",
+    courses: [
+      { name: "Azure Data Factory", date: "May 2022" },
+      { name: "AI-102: Designing and Implementing a Microsoft Azure AI Solution", date: "2021" },
+      { name: "AZ-305: Designing Microsoft Azure Infrastructure", date: "Jul 2020" },
+      { name: "Microsoft VSTS (now Azure DevOps)", date: "Sep 2018" },
+      { name: "Azure Essentials", date: "Jun 2018" },
+    ],
+  },
+  {
+    area: "AI, ML & conversational systems",
+    icon: "brain",
+    courses: [
+      { name: "An Enlightenment to Machine Learning", date: "May 2020" },
+      { name: "Deep Learning – Tools and Applications", date: "May 2020" },
+      { name: "MFDM™ AI – The Renaissance", date: "May 2020" },
+      { name: "Statistics and Probability", date: "May 2020" },
+      { name: "Data Mining", date: "May 2020" },
+      { name: "Data Visualization", date: "May 2020" },
+      { name: "Understanding Conversational Systems", date: "Jan 2020" },
+      { name: "IBM Watson Explorer", date: "May 2017" },
+    ],
+  },
+  {
+    area: "DevOps, CI/CD & containers",
+    icon: "shield",
+    courses: [
+      { name: "DevOps Engineer Program (E2)", date: "Apr 2021" },
+      { name: "Docker – Containers", date: "Feb 2021" },
+      { name: "Kubernetes – The Basics", date: "Feb 2021" },
+      { name: "ELK Stack (Elasticsearch, Logstash, Kibana)", date: "Feb 2021" },
+      { name: "Infrastructure as Code", date: "Jan 2021" },
+      { name: "Git (Prodigious Git)", date: "Jan 2021" },
+      { name: "Continuous Integration with Jenkins", date: "Jan 2021" },
+      { name: "SonarQube", date: "Jan 2021" },
+      { name: "More on Git", date: "Oct 2018" },
+      { name: "Continuous Integration", date: "Oct 2017" },
+      { name: "Continuous Deployment", date: "Oct 2017" },
+      { name: "DevOps Culture", date: "Oct 2017" },
+    ],
+  },
+  {
+    area: "Architecture, APIs & data",
+    icon: "plug",
+    courses: [
+      { name: "Salesforce 101: Introduction to Salesforce", date: "Jan 2024" },
+      { name: "NoSQL", date: "May 2020" },
+      { name: "Service Discovery", date: "Sep 2018" },
+      { name: "Caching Techniques", date: "Sep 2018" },
+      { name: "Microservices Architecture", date: "Jun 2018" },
+      { name: "API Gateways", date: "Jun 2018" },
+      { name: "Redis", date: "Jan 2018" },
+    ],
+  },
+  {
+    area: "Python & Node.js",
+    icon: "code",
+    courses: [
+      { name: "Python 3 – Functions and OOP", date: "May 2018" },
+      { name: "Python 3 Application Programming", date: "May 2018" },
+      { name: "Node.js with Express Framework", date: "Apr 2018" },
+      { name: "Node.js – E1 assessment", date: "Nov 2017" },
+      { name: "Python 3 Programming", date: "Oct 2017" },
+      { name: "Node.js Essentials", date: "Oct 2017" },
+    ],
+  },
+  {
+    area: "Front-end: React, Angular & TypeScript",
+    icon: "messages",
+    courses: [
+      { name: "HTML5 Semantic Elements", date: "Jun 2022" },
+      { name: "Styling with CSS3", date: "Jun 2022" },
+      { name: "React JS Web Development", date: "Jun 2020" },
+      { name: "React JS – Beginner assessment", date: "Apr 2018" },
+      { name: "Angular 4 – Beginners assessment", date: "Apr 2018" },
+      { name: "AngularJS 1.x Routers and Custom Directives", date: "Mar 2018" },
+      { name: "AngularJS – Intermediate", date: "Dec 2017" },
+      { name: "Angular 2 – Game of States", date: "Oct 2017" },
+      { name: "Angular 2 – Building Blocks", date: "Oct 2017" },
+      { name: "Angular 2 – Routes and Forms", date: "Oct 2017" },
+      { name: "AngularJS 1.x Directives", date: "Oct 2017" },
+      { name: "AngularJS Packaging and Testing", date: "Oct 2017" },
+      { name: "TypeScript", date: "Oct 2017" },
+      { name: "ECMAScript 6", date: "Oct 2017" },
+      { name: "JavaScript Essentials", date: "Oct 2017" },
+      { name: "AngularJS – Beginner", date: "Dec 2016" },
+      { name: "HTML5 & CSS3 – E0", date: "Dec 2016" },
+    ],
+  },
+  {
+    area: "Early career: Java, ETL & Lotus Notes",
+    icon: "activity",
+    courses: [
+      { name: "IBM Lotus Notes LOT-985 & LOT-986 tests", date: "Sep 2014" },
+      { name: "Lotus Notes 4.0 Programming & Administration assessments", date: "2013–2014" },
+      { name: "Lotus Domino R5 Programming assessments", date: "2014" },
+      { name: "Java 2 Fundamentals assessments", date: "2013" },
+      { name: "Informatica PowerMart assessment", date: "Dec 2012" },
+    ],
+  },
+];
+
 /* ------------------------------ Architecture ------------------------------ */
 
 export type FlowStep = { label: string; detail: string };

@@ -10,6 +10,7 @@ import {
   certifications,
   diagrams,
   internalCertifications,
+  internalCourses,
   disclosure,
   education,
   employer,
@@ -333,7 +334,10 @@ const intents: Intent[] = [
       text: [
         `${firstName} has also completed ${internalCertifications.length} technical certifications on TCS's internal learning platform, which shows how quickly new technology gets picked up:`,
       ],
-      bullets: internalCertifications.map((c) => `${c.name} (${c.date})`),
+      bullets: [
+        ...internalCertifications.map((c) => `${c.name} (${c.date})`),
+        `Plus ${internalCourses.reduce((n, g) => n + g.courses.length, 0)} technical courses across: ${internalCourses.map((g) => g.area).join("; ")}.`,
+      ],
       actions: [actions.section("certifications", "See certifications")],
     }),
   },

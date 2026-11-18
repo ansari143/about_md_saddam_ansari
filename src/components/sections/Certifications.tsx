@@ -1,5 +1,6 @@
 import { Award, GraduationCap, TrendingUp } from "lucide-react";
-import { certifications, education, internalCertifications, type Certification } from "@/data/site";
+import { certifications, education, internalCertifications, internalCourses, type Certification } from "@/data/site";
+import { CourseGroups } from "../CourseGroups";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 
@@ -8,6 +9,8 @@ const statusStyle: Record<Certification["status"], { label: string; cls: string 
   expired: { label: "Expired", cls: "border-amber-500/50 text-amber-600 dark:text-amber-400" },
   completed: { label: "Completed", cls: "border-line-strong text-subtle" },
 };
+
+const courseCount = internalCourses.reduce((n, g) => n + g.courses.length, 0);
 
 export function Certifications() {
   return (
@@ -47,15 +50,17 @@ export function Certifications() {
             <div className="min-w-0 flex-1">
               <h3 className="font-display text-lg font-semibold text-fg">Continuous learning at TCS</h3>
               <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted">
-                {internalCertifications.length} technical certifications from TCS&apos;s internal learning platform,
-                completed between {internalCertifications[internalCertifications.length - 1].date.split(" ")[1]} and{" "}
-                {internalCertifications[0].date.split(" ")[1]}: from Java and web frameworks to cloud, DevOps and
-                generative AI. Each one maps to skills I&apos;ve used on the job, and together they show how quickly I
-                pick up new technology as it emerges.
+                {internalCertifications.length} technical certifications and {courseCount} technical courses from
+                TCS&apos;s internal learning platform, completed between 2012 and 2025. They run from Java, ETL and web
+                frameworks to Azure, DevOps, machine learning and generative AI. Each one maps to skills on my resume,
+                and together they show how quickly I pick up new technology as it emerges.
               </p>
             </div>
           </div>
-          <ol className="mt-6 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+          <h4 className="mt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
+            Internal certifications · {internalCertifications.length}
+          </h4>
+          <ol className="mt-3 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
             {internalCertifications.map((c) => (
               <li key={c.name} className="flex items-start gap-3 border-t border-line pt-3">
                 <span className="mt-0.5 w-16 shrink-0 font-mono text-[11px] text-subtle">{c.date}</span>
@@ -66,6 +71,12 @@ export function Certifications() {
               </li>
             ))}
           </ol>
+          <h4 className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
+            Technical courses · {courseCount}
+          </h4>
+          <div className="mt-3">
+            <CourseGroups groups={internalCourses} />
+          </div>
         </div>
       </Reveal>
 
