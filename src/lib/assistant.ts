@@ -8,6 +8,8 @@
  */
 import {
   certifications,
+  diagrams,
+  internalCertifications,
   disclosure,
   education,
   employer,
@@ -141,11 +143,70 @@ const intents: Intent[] = [
     }),
   },
   {
+    id: "rag",
+    keywords: [
+      "rag", "retrieval", "retrieval-augmented", "grounding", "grounded", "chunking", "chunk", "embeddings",
+      "embedding", "reranking", "rerank", "citations", "hybrid search", "vector", "vector search",
+      "knowledge", "elasticsearch", "atlas", "enterprise search",
+    ],
+    answer: () => {
+      const d = (() => { const d = diagrams.find((x) => x.id === "rag")!; return d; })();
+      return {
+        text: [`${firstName} designs RAG pipelines end to end: ${d.steps.map((x) => x.label.toLowerCase()).join(" → ")}.`],
+        bullets: d.deepDive.flatMap((x) => x.points).slice(0, 4),
+        actions: [actions.section("architecture", "See the RAG deep dive")],
+      };
+    },
+    more: () => {
+      const d = (() => { const d = diagrams.find((x) => x.id === "rag")!; return d; })();
+      return {
+        text: ["More on how the RAG pipeline works:"],
+        bullets: [...d.deepDive.flatMap((x) => x.points).slice(4), `Applied in: ${d.appliedIn}`],
+        actions: [actions.section("architecture", "Open Architecture")],
+      };
+    },
+  },
+  {
+    id: "state",
+    keywords: [
+      "state", "stateful", "state management", "checkpoint", "checkpoints", "checkpointing", "memory",
+      "persistence", "resume", "retries", "retry", "human approval", "human approvals", "hitl",
+      "human in the loop", "long-running", "durable",
+    ],
+    answer: () => {
+      const d = (() => { const d = diagrams.find((x) => x.id === "state")!; return d; })();
+      return {
+        text: [`${firstName} architects stateful LangGraph workflows with checkpoints, retries and human approvals:`],
+        bullets: d.deepDive.flatMap((x) => x.points).slice(0, 5),
+        actions: [actions.section("architecture", "See the state management deep dive")],
+      };
+    },
+  },
+  {
+    id: "agents",
+    keywords: [
+      "agent", "agents", "agentic", "multi-agent", "multiagent", "multi agent", "langgraph", "orchestrator",
+      "orchestration", "mcp", "model context protocol", "tool calling", "tools", "routing", "router",
+      "hybrid routing", "fully agentic",
+    ],
+    answer: () => {
+      const r = (() => { const d = diagrams.find((x) => x.id === "hybrid-routing")!; return d; })();
+      const m = (() => { const d = diagrams.find((x) => x.id === "multi-agent")!; return d; })();
+      return {
+        text: [
+          `${firstName} architects AI agents, tools and multi-agent LangGraph workflows with MCP integrations.`,
+          "A recent decision: after prototyping a fully agentic redesign and a hybrid routing design, the hybrid design was chosen to reduce LLM calls, lower routing latency and preserve existing workflows.",
+        ],
+        bullets: [...r.deepDive[1].points, ...m.deepDive[0].points.slice(1)],
+        actions: [actions.section("architecture", "See the architecture deep dives")],
+      };
+    },
+  },
+  {
     id: "genai",
     keywords: [
-      "genai", "generative", "ai", "llm", "llms", "agent", "agents", "agentic", "langgraph", "langchain",
-      "rag", "retrieval", "mcp", "model context protocol", "embeddings", "vector", "search", "openai",
-      "gpt", "prompt", "guardrails", "hitl", "human in the loop", "multi-agent", "orchestration",
+      "genai", "generative", "ai", "llm", "llms", "langchain", "openai", "azure openai", "gpt", "prompt",
+      "prompt engineering", "guardrails", "model evaluation",
     ],
     answer: () => ({
       text: [`GenAI and agentic AI are the core of ${firstName}'s current work:`],
@@ -243,12 +304,22 @@ const intents: Intent[] = [
   },
   {
     id: "certifications",
-    keywords: ["certification", "certifications", "certified", "certificate", "credential", "credentials", "az-300", "watson", "training", "courses", "bootcamp"],
+    keywords: ["certification", "certifications", "certified", "certificate", "certificates", "credential", "credentials", "az-300", "watson", "training", "courses", "bootcamp", "learning", "learn", "learner", "upskilling", "internal"],
     answer: () => ({
       text: ["Certifications and professional development:"],
-      bullets: certifications.map(
-        (c) => `${c.name} — ${c.issuer}, ${c.date}${c.status === "expired" ? " (expired)" : ""}${c.note ? ` (${c.note})` : ""}`,
-      ),
+      bullets: [
+        ...certifications.map(
+          (c) => `${c.name} — ${c.issuer}, ${c.date}${c.status === "expired" ? " (expired)" : ""}${c.note ? ` (${c.note})` : ""}`,
+        ),
+        `Plus ${internalCertifications.length} technical certifications completed internally at TCS (ask "tell me more").`,
+      ],
+      actions: [actions.section("certifications", "See certifications")],
+    }),
+    more: () => ({
+      text: [
+        `${firstName} has also completed ${internalCertifications.length} technical certifications on TCS's internal learning platform, which shows how quickly new technology gets picked up:`,
+      ],
+      bullets: internalCertifications.map((c) => `${c.name} (${c.date})`),
       actions: [actions.section("certifications", "See certifications")],
     }),
   },
@@ -437,7 +508,9 @@ export function answer(input: string, lastTopic?: string): ChatAnswer {
 
   // A single-technology question ("Does he know Kafka?") gets a specific answer;
   // broader questions that hit several topic keywords get the topic summary.
-  if (skill && (!ranked.length || ranked[0].s <= 2)) {
+  // Topics with their own detailed answer (RAG, state, agents...) always win.
+  const detailedTopics = new Set(["rag", "state", "agents", "certifications", "authorization", "contact", "resume", "education"]);
+  if (skill && (!ranked.length || (ranked[0].s <= 2 && !detailedTopics.has(ranked[0].i.id)))) {
     const roles = rolesUsing(skill.skill.split(/\s*[/&(]\s*/)[0]);
     return {
       text: [
@@ -478,7 +551,8 @@ export const welcome: ChatAnswer = {
 export const suggestions: { label: string; question: string }[] = [
   ...(profile.bookingUrl ? [{ label: "📅 Book a call", question: "How can I schedule a call?" }] : []),
   { label: "💼 Current role", question: "What is Saddam doing now?" },
-  { label: "🤖 GenAI & agents", question: "Tell me about GenAI and agentic AI experience" },
+  { label: "🤖 Agents & routing", question: "Tell me about multi-agent and agent routing experience" },
+  { label: "📚 RAG", question: "How does Saddam design RAG pipelines?" },
   { label: "📈 Career timeline", question: "Show me the career timeline" },
   { label: "🛂 Work authorization", question: "What is the work authorization?" },
   { label: "📄 Resume", question: "Can I download the resume?" },

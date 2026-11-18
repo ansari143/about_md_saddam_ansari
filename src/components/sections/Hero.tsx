@@ -1,5 +1,5 @@
 import { ArrowRight, CalendarDays, Download, Mail, MapPin } from "lucide-react";
-import { disclosure, heroStats, profile } from "@/data/site";
+import { disclosure, focusAreas, heroStats, profile } from "@/data/site";
 import { AskAIButton } from "../AskAIButton";
 import { HeroVisual } from "../HeroVisual";
 import { CountUp } from "../ui/CountUp";
@@ -32,6 +32,13 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
             <p className="mt-3 font-display text-2xl font-medium sm:text-3xl">
               <span className="text-gradient">{profile.title}</span>
             </p>
+            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Focus areas">
+              {focusAreas.slice(1).map((f) => (
+                <li key={f} className="rounded-full border border-line bg-surface/60 px-3 py-1 text-xs text-muted">
+                  {f}
+                </li>
+              ))}
+            </ul>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg">

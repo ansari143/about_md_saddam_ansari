@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowDown, ArrowRight, Briefcase, CheckCircle2 } from "lucide-react";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { diagrams } from "@/data/site";
 
@@ -62,11 +62,12 @@ export function Architecture() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-cyan">Architecture</p>
         <h2 id="architecture-title" className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
-          Reference patterns I design with
+          How I design enterprise AI systems
         </h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-          Generic, vendor-neutral patterns for enterprise AI. They show how I think about the problem — not any
-          client&apos;s implementation.
+          Hybrid routing, RAG, multi-agent orchestration, state management, tool integration, security and
+          observability: how each pattern works, the decisions behind it, and where I&apos;ve applied it. Described at a
+          public-safe level, with no proprietary implementation details.
         </p>
 
         <div className="mt-10 card overflow-hidden">
@@ -107,7 +108,30 @@ export function Architecture() {
             <div className="mt-8" key={d.id}>
               <FlowDiagram index={active} />
             </div>
-            <ul className="mt-8 grid gap-3 border-t border-line pt-6 sm:grid-cols-3">
+            <div className="mt-10 grid gap-8 border-t border-line pt-8 lg:grid-cols-2">
+              {d.deepDive.map((section) => (
+                <div key={section.heading}>
+                  <h4 className="font-display text-base font-semibold text-fg">{section.heading}</h4>
+                  <ul className="mt-3 space-y-2.5">
+                    {section.points.map((p) => (
+                      <li key={p} className="flex gap-2.5 text-sm leading-relaxed text-muted">
+                        <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-cyan" />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 flex gap-3 rounded-lg border-l-2 border-violet bg-surface-2/70 px-4 py-3 text-sm">
+              <Briefcase className="mt-0.5 h-4 w-4 shrink-0 text-violet" aria-hidden />
+              <span>
+                <span className="font-semibold text-fg">Applied in my work: </span>
+                <span className="text-muted">{d.appliedIn}</span>
+              </span>
+            </p>
+            <h4 className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">Design principles</h4>
+            <ul className="mt-3 grid gap-3 sm:grid-cols-3">
               {d.principles.map((p) => (
                 <li key={p} className="flex gap-2.5 text-sm text-muted">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-violet" aria-hidden />

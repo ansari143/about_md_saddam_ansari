@@ -102,6 +102,9 @@ export const heroStats: Stat[] = [
   { value: "30K", label: "Daily active users", metric: true },
 ];
 
+/** Focus areas from the resume headline. */
+export const focusAreas = ["Enterprise AI Architect", "Generative AI", "Agentic AI", "Engineering Enablement"];
+
 /* ---------------------------------- About --------------------------------- */
 
 export const about = {
@@ -111,20 +114,20 @@ export const about = {
   ],
   philosophy: [
     {
-      title: "Design it, then guide it home",
-      body: "I personally design solution patterns and stay close to delivery — walking developers through implementation, running design reviews and resolving tradeoffs before they become production issues.",
+      title: "Prototype, compare, then decide",
+      body: "I personally build and compare agentic AI prototypes before committing to a design. For example, I prototyped a fully agentic assistant against a hybrid routing design and chose hybrid for fewer LLM calls, lower latency and preserved workflows.",
     },
     {
-      title: "Secure and governed by default",
-      body: "OAuth/OIDC, Entra ID, least-privilege access, secret management and auditable tool execution are part of the architecture from day one, not an afterthought.",
+      title: "Guide it from proof of concept to production",
+      body: "I guide technical leads and senior developers in turning prototypes into production features: leading design reviews, explaining architecture decisions and helping resolve implementation and integration issues.",
     },
     {
-      title: "Evolve, don't rip and replace",
-      body: "Preserve what already works — established conversational intent flows, systems of record, integrations — and introduce LLM retrieval and agents where they add measurable value.",
+      title: "Secure and grounded by default",
+      body: "Least-privilege access, OAuth/OIDC and Entra ID, CI/CD security gates, grounded answers with source citations, and AI guardrails are part of the design from day one.",
     },
     {
-      title: "Observable and production-ready",
-      body: "Tracing, monitoring and evaluation of latency, reliability and guardrails are designed in, so teams can operate AI systems with confidence.",
+      title: "Enable engineers, not just systems",
+      body: "I mentor engineers on agent design and AI-assisted prototyping, debugging, testing, and automated code review and fix-agent patterns, using Claude Code, Cursor and GitHub Copilot.",
     },
   ],
   journey: [
@@ -466,128 +469,312 @@ export const education = {
   year: "2012",
 };
 
+/* ------------------------ Internal certifications ------------------------ */
+
+export type InternalCertification = { name: string; area: string; date: string };
+
+/**
+ * Technical certifications completed on TCS's internal learning platform (iEvolve),
+ * limited to skills that appear on the resume. Newest first.
+ */
+export const internalCertifications: InternalCertification[] = [
+  { name: "MLT Runway – Cloud Computing", area: "Cloud", date: "Jan 2025" },
+  { name: "Generative AI Foundation", area: "Generative AI", date: "Oct 2023" },
+  { name: "Elevate Wings 1 – Web Design", area: "Web", date: "Jun 2022" },
+  { name: "MFDM™ AI Fluent – DevOps", area: "DevOps", date: "Apr 2021" },
+  { name: "MFDM™ AI Fluent", area: "AI", date: "Apr 2021" },
+  { name: "MFDM™ AI Aware", area: "AI", date: "May 2020" },
+  { name: "React JS Intermediate", area: "Web", date: "Apr 2018" },
+  { name: "Angular 4 Intermediate", area: "Web", date: "Apr 2018" },
+  { name: "AngularJS Advanced", area: "Web", date: "Dec 2017" },
+  { name: "IBM Watson Explorer Foundation", area: "AI", date: "May 2017" },
+  { name: "AngularJS Intermediate", area: "Web", date: "Dec 2016" },
+  { name: "AngularJS Foundation", area: "Web", date: "Dec 2016" },
+  { name: "HTML5 & CSS3 Intermediate", area: "Web", date: "Dec 2016" },
+  { name: "HTML5 & CSS3 Foundation", area: "Web", date: "Dec 2016" },
+  { name: "Cloud Computing (General) Foundation", area: "Cloud", date: "Sep 2016" },
+  { name: "Core Java Concepts Foundation", area: "Java", date: "May 2016" },
+  { name: "Java Assessment – E1", area: "Java", date: "Jun 2015" },
+];
+
 /* ------------------------------ Architecture ------------------------------ */
 
 export type FlowStep = { label: string; detail: string };
+export type DeepDive = { heading: string; points: string[] };
 export type Diagram = {
   id: string;
   title: string;
   summary: string;
   steps: FlowStep[];
+  /** Detailed explanation of how the pattern works. */
+  deepDive: DeepDive[];
   principles: string[];
+  /** Where this pattern shows up in the resume (public-safe, no proprietary detail). */
+  appliedIn: string;
 };
 
-/** Generic reference patterns only — no proprietary implementation details. */
+/** Reference patterns explained at a public-safe level, no proprietary implementation details. */
 export const diagrams: Diagram[] = [
+  {
+    id: "hybrid-routing",
+    title: "Hybrid routing",
+    summary:
+      "Send each request down the cheapest reliable path: deterministic rules first, intent classification next, retrieval as the safety net.",
+    steps: [
+      { label: "User request", detail: "One conversational entry point for employees" },
+      { label: "Regex rules", detail: "Known request patterns matched instantly" },
+      { label: "Agent orchestrator", detail: "Invokes the right agent or MCP tool" },
+      { label: "Intent classification", detail: "LLM or Dialogflow for everything else" },
+      { label: "RAG fallback", detail: "Enterprise knowledge when no intent matches" },
+      { label: "Response", detail: "Answer, action result or next step" },
+    ],
+    deepDive: [
+      {
+        heading: "Why hybrid instead of fully agentic",
+        points: [
+          "I prototyped both a fully agentic redesign and a hybrid routing architecture and compared them side by side.",
+          "A fully agentic design sends every request through an LLM, which adds model calls, routing latency and cost to requests that have predictable answers.",
+          "The hybrid design reduces LLM calls, lowers routing latency and preserves existing workflows that already work well.",
+        ],
+      },
+      {
+        heading: "How a request flows",
+        points: [
+          "Regex rules catch well-known request patterns and send them directly to the agent orchestrator.",
+          "The orchestrator invokes the right agent or MCP tool to complete the task.",
+          "Requests the rules don't recognize go to LLM or Dialogflow intent classification, so established conversational flows keep working.",
+          "When no intent matches, enterprise RAG answers from company knowledge instead of failing.",
+        ],
+      },
+    ],
+    principles: [
+      "Use deterministic paths where answers are predictable",
+      "Spend LLM calls where they add value",
+      "Never dead-end: RAG is the fallback",
+    ],
+    appliedIn:
+      "Selected for an enterprise employee assistant after prototyping it against a fully agentic redesign (AI Technical Architect, 2023–present).",
+  },
   {
     id: "rag",
     title: "RAG pipeline",
     summary:
-      "Grounded answers over enterprise content: ingest once, retrieve precisely, cite every claim.",
+      "Grounded answers over enterprise content: ingest carefully, retrieve precisely, and cite every source.",
     steps: [
-      { label: "Ingest", detail: "Connectors pull documents with source permissions" },
-      { label: "Chunk & embed", detail: "Structure-aware chunks, embeddings, metadata" },
-      { label: "Hybrid retrieve", detail: "Vector + keyword search, permission filtering" },
-      { label: "Rerank", detail: "Reorder candidates for relevance" },
-      { label: "Ground & generate", detail: "LLM answers only from retrieved context" },
-      { label: "Cite", detail: "Responses link back to sources" },
+      { label: "Ingest", detail: "Pull structured and unstructured content from sources" },
+      { label: "Chunk", detail: "Split content into retrievable passages" },
+      { label: "Embed", detail: "Create vector embeddings with metadata" },
+      { label: "Hybrid search", detail: "Combine vector and keyword retrieval" },
+      { label: "Rerank", detail: "Reorder candidates by relevance" },
+      { label: "Ground & cite", detail: "Answer only from context, with source citations" },
+    ],
+    deepDive: [
+      {
+        heading: "Ingestion and chunking",
+        points: [
+          "Content is ingested from enterprise sources and split into chunks sized so each passage carries enough context to answer on its own.",
+          "Metadata such as source, title and location travels with every chunk, so answers can cite where they came from.",
+        ],
+      },
+      {
+        heading: "Retrieval: vector + keyword",
+        points: [
+          "Embeddings capture meaning, so paraphrased questions still find the right passage.",
+          "Keyword search catches exact terms such as product names, codes and acronyms that embeddings can miss.",
+          "Hybrid search combines both, using stores such as MongoDB Atlas Vector Search and Elasticsearch.",
+        ],
+      },
+      {
+        heading: "Reranking, grounding and citations",
+        points: [
+          "A reranking step reorders the retrieved candidates so the most relevant passages reach the model.",
+          "The model is grounded: it answers only from the retrieved context and returns source citations.",
+          "AI guardrails and GPT model evaluation help check answer quality and keep responses on-policy.",
+        ],
+      },
     ],
     principles: [
-      "Respect source-system access controls at query time",
-      "Evaluate retrieval quality separately from generation",
+      "Cite sources for every answer",
+      "Combine semantic and exact-match retrieval",
       "Prefer “I don't know” over ungrounded answers",
     ],
+    appliedIn:
+      "Designed RAG pipelines for ingestion, chunking, embeddings, hybrid search, reranking, grounding and source citations; enterprise RAG is the fallback path in the hybrid assistant.",
   },
   {
-    id: "agentic",
-    title: "Agentic orchestration",
+    id: "multi-agent",
+    title: "Multi-agent orchestration",
     summary:
-      "A router sends each request to the right capability; stateful graphs make multi-step work reliable.",
+      "An orchestrator coordinates specialized agents and tools, so each agent stays focused and testable.",
     steps: [
-      { label: "User request", detail: "Single conversational entry point" },
-      { label: "Router", detail: "Intent flows, retrieval or agent — hybrid NLP/LLM" },
-      { label: "Agent graph", detail: "LangGraph nodes with shared, typed state" },
-      { label: "Checkpoint", detail: "Persist state; resume after failure" },
-      { label: "Tools", detail: "Governed calls to enterprise systems" },
-      { label: "Response", detail: "Result, status and next steps" },
+      { label: "Request", detail: "Task arrives from the router" },
+      { label: "Orchestrator", detail: "Decides which agent or tool runs next" },
+      { label: "Specialized agents", detail: "Each owns one domain or capability" },
+      { label: "Tools / MCP", detail: "Secure calls into business systems" },
+      { label: "Aggregate", detail: "Combine results into one response" },
+    ],
+    deepDive: [
+      {
+        heading: "Why multiple agents",
+        points: [
+          "One agent that tries to do everything becomes hard to prompt, test and secure.",
+          "Specialized agents each own a narrow capability, with only the tools that capability needs.",
+          "The orchestrator routes between them and combines their results into one answer or action.",
+        ],
+      },
+      {
+        heading: "LangGraph workflows",
+        points: [
+          "Workflows are modelled as LangGraph graphs: nodes do the work and edges decide what runs next.",
+          "Agents call tools through secure tool calling and Model Context Protocol (MCP) integrations.",
+          "Integrations reach systems such as Microsoft Graph, SharePoint, OneDrive, Workday, ServiceNow, Salesforce and SAP Concur.",
+        ],
+      },
     ],
     principles: [
-      "Keep deterministic flows deterministic; use LLMs where they add value",
-      "Bounded retries with clear error handling",
-      "Every step traceable and auditable",
+      "One agent, one responsibility",
+      "Least-privilege tools per agent",
+      "Every step traceable",
     ],
+    appliedIn:
+      "Architect AI agents and tools for a unified employee platform, plus stateful and multi-agent LangGraph workflows with MCP integrations.",
+  },
+  {
+    id: "state",
+    title: "State management",
+    summary:
+      "Multi-step AI work needs durable state: what has happened, what's pending, and how to resume after failure.",
+    steps: [
+      { label: "Typed state", detail: "Shared state the graph reads and updates" },
+      { label: "Node runs", detail: "Each step updates state" },
+      { label: "Checkpoint", detail: "State persisted after each step" },
+      { label: "Retry", detail: "Failed steps retried with limits" },
+      { label: "Resume", detail: "Continue from the last checkpoint" },
+    ],
+    deepDive: [
+      {
+        heading: "Stateful workflows",
+        points: [
+          "Each workflow keeps a shared state that every step can read and update, such as the request, gathered data, decisions and pending actions.",
+          "Keeping state explicit makes multi-turn and multi-step behaviour predictable and easier to debug.",
+        ],
+      },
+      {
+        heading: "Checkpoints and retries",
+        points: [
+          "Checkpoints persist state as the workflow progresses, so a failure doesn't lose work already done.",
+          "Retries handle transient failures in tools or downstream systems, with limits so they don't loop forever.",
+          "After a failure or a pause, the workflow resumes from the last checkpoint instead of starting over.",
+        ],
+      },
+      {
+        heading: "Human approvals",
+        points: [
+          "For sensitive actions, the workflow pauses at a checkpoint and waits for a human approval.",
+          "Because state is durable, the approval can arrive later and the workflow continues exactly where it stopped.",
+        ],
+      },
+    ],
+    principles: [
+      "Make state explicit",
+      "Checkpoint before side effects",
+      "Bounded retries, clear failure paths",
+    ],
+    appliedIn:
+      "Architect stateful and multi-agent LangGraph workflows with checkpoints, retries and human approvals (AI Technical Architect, 2023–present).",
   },
   {
     id: "mcp",
     title: "MCP tool integration",
     summary:
-      "Standardized tool access: agents discover capabilities through MCP servers instead of bespoke integrations.",
+      "Standardized tool access: agents discover capabilities through MCP servers instead of one-off integrations.",
     steps: [
-      { label: "Agent", detail: "Plans which capability it needs" },
+      { label: "Agent", detail: "Decides which capability it needs" },
       { label: "MCP client", detail: "Discovers tools and their schemas" },
       { label: "MCP server", detail: "Wraps a system behind typed tools" },
-      { label: "Policy check", detail: "Scope, allow-list and input validation" },
-      { label: "System of record", detail: "API call with delegated identity" },
+      { label: "Policy check", detail: "Scope and input validation" },
+      { label: "Business system", detail: "API call with the user's identity" },
     ],
-    principles: [
-      "Least-privilege scopes per tool",
-      "Validate inputs and outputs against schemas",
-      "Log every tool invocation",
+    deepDive: [
+      {
+        heading: "Why MCP",
+        points: [
+          "Model Context Protocol gives agents one standard way to discover and call tools, so new capabilities don't need custom agent code.",
+          "Each tool has a schema, so inputs can be validated before anything reaches a business system.",
+        ],
+      },
+      {
+        heading: "Keeping tool calls secure",
+        points: [
+          "Tools get least-privilege scopes, and calls run with the user's identity rather than broad service credentials.",
+          "Every tool invocation is logged and traced, so actions are auditable.",
+        ],
+      },
     ],
+    principles: ["Least-privilege scopes per tool", "Validate against schemas", "Log every invocation"],
+    appliedIn:
+      "Agent orchestrator invokes agents or MCP tools; LangGraph workflows use Model Context Protocol integrations with secure tool calling.",
   },
   {
     id: "auth",
-    title: "Authentication & authorization",
-    summary:
-      "The assistant acts on behalf of the user — never with more access than the user has.",
+    title: "Security & identity",
+    summary: "The assistant acts on behalf of the user, never with more access than the user has.",
     steps: [
-      { label: "Sign-in", detail: "SSO via OIDC / Entra ID" },
-      { label: "Token", detail: "Short-lived, scoped access tokens" },
-      { label: "API gateway", detail: "Validates tokens, rate limits" },
+      { label: "Sign-in", detail: "SSO with OIDC and Entra ID" },
+      { label: "Token", detail: "OAuth 2.0 / JWT access tokens" },
+      { label: "API gateway", detail: "Validates tokens and routes calls" },
       { label: "Service", detail: "RBAC and least-privilege checks" },
-      { label: "Downstream API", detail: "Delegated (on-behalf-of) calls" },
-      { label: "Secrets", detail: "Managed in a vault, never in code" },
+      { label: "Delivery gates", detail: "CI/CD security scans before release" },
     ],
-    principles: [
-      "Zero standing secrets in code or prompts",
-      "Authorize per action, not per session",
-      "Security scanning gates in CI/CD",
+    deepDive: [
+      {
+        heading: "Identity and access",
+        points: [
+          "Users sign in once through SSO (OIDC and Entra ID), and services authorize each call with OAuth 2.0 / JWT tokens.",
+          "RBAC and least-privilege access limit what each service, agent and tool can do.",
+        ],
+      },
+      {
+        heading: "Secure delivery",
+        points: [
+          "CI/CD security gates (Veracode, SonarQube, Black Duck) run before release.",
+          "Penetration-test findings are remediated as part of production readiness.",
+        ],
+      },
     ],
+    principles: ["Authorize per action", "Least privilege everywhere", "Security gates in CI/CD"],
+    appliedIn:
+      "Guide Azure and AKS microservice architecture, least-privilege access, CI/CD security gates and penetration-test remediation.",
   },
   {
     id: "observability",
     title: "Observability",
-    summary:
-      "Treat AI like any production system: trace it, measure it, alert on it.",
+    summary: "Treat AI like any production system: trace it, measure it, and evaluate it.",
     steps: [
-      { label: "Instrument", detail: "OpenTelemetry spans across services" },
-      { label: "Trace LLM calls", detail: "Prompts, tokens, latency, tool calls" },
-      { label: "Metrics", detail: "Latency, errors, usage, quality signals" },
-      { label: "Evaluate", detail: "Groundedness and task success checks" },
-      { label: "Alert & improve", detail: "Dashboards, alerts, feedback loop" },
+      { label: "Instrument", detail: "OpenTelemetry across services" },
+      { label: "Trace LLM calls", detail: "Prompts, latency and tool calls (Langfuse)" },
+      { label: "Monitor", detail: "Datadog and Azure Application Insights" },
+      { label: "Evaluate", detail: "Performance, reliability and guardrails" },
+      { label: "Improve", detail: "Feed findings back into design" },
     ],
-    principles: [
-      "One trace ID from user request to downstream call",
-      "Redact sensitive data before logging",
-      "Measure quality, not just uptime",
+    deepDive: [
+      {
+        heading: "What gets measured",
+        points: [
+          "Distributed tracing follows a request from the user through routing, agents, tools and downstream systems.",
+          "LLM-specific tracing (Langfuse) records prompts, model latency and tool calls.",
+          "Monitoring (Datadog, Azure Application Insights) tracks errors, latency and reliability in production.",
+        ],
+      },
+      {
+        heading: "Using the data",
+        points: [
+          "Workflow performance, reliability and AI guardrails are evaluated regularly, and findings feed back into the architecture.",
+        ],
+      },
     ],
-  },
-  {
-    id: "hitl",
-    title: "Human-in-the-loop",
-    summary:
-      "Agents prepare the work; people approve consequential actions.",
-    steps: [
-      { label: "Agent proposes", detail: "Drafts an action with full context" },
-      { label: "Risk check", detail: "Policy decides if approval is required" },
-      { label: "Pause & persist", detail: "Graph checkpoint waits for a decision" },
-      { label: "Human review", detail: "Approve, edit or reject" },
-      { label: "Execute & audit", detail: "Action runs; decision is recorded" },
-    ],
-    principles: [
-      "Explicit approval for write or irreversible actions",
-      "Show users exactly what will happen",
-      "Durable state so approvals can wait",
-    ],
+    principles: ["One trace per request", "Measure quality, not just uptime", "Close the feedback loop"],
+    appliedIn:
+      "Guide tracing and monitoring; evaluate workflow performance, reliability and AI guardrails.",
   },
 ];

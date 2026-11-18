@@ -1,5 +1,5 @@
-import { Award, GraduationCap } from "lucide-react";
-import { certifications, education, type Certification } from "@/data/site";
+import { Award, GraduationCap, TrendingUp } from "lucide-react";
+import { certifications, education, internalCertifications, type Certification } from "@/data/site";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 
@@ -15,7 +15,7 @@ export function Certifications() {
       id="certifications"
       eyebrow="Certifications"
       title="Certifications & professional development"
-      intro="Listed exactly as held. Expired credentials and courses are labeled as such."
+      intro="Industry certifications listed exactly as held, with expired credentials and courses labeled, followed by technical certifications completed internally at TCS."
     >
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {certifications.map((c, i) => {
@@ -38,6 +38,37 @@ export function Certifications() {
           );
         })}
       </ul>
+      <Reveal>
+        <div className="card mt-10 p-6 sm:p-7">
+          <div className="flex flex-wrap items-start gap-4">
+            <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-surface-2">
+              <TrendingUp className="h-5 w-5 text-cyan" aria-hidden />
+            </span>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-display text-lg font-semibold text-fg">Continuous learning at TCS</h3>
+              <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted">
+                {internalCertifications.length} technical certifications from TCS&apos;s internal learning platform,
+                completed between {internalCertifications[internalCertifications.length - 1].date.split(" ")[1]} and{" "}
+                {internalCertifications[0].date.split(" ")[1]}: from Java and web frameworks to cloud, DevOps and
+                generative AI. Each one maps to skills I&apos;ve used on the job, and together they show how quickly I
+                pick up new technology as it emerges.
+              </p>
+            </div>
+          </div>
+          <ol className="mt-6 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+            {internalCertifications.map((c) => (
+              <li key={c.name} className="flex items-start gap-3 border-t border-line pt-3">
+                <span className="mt-0.5 w-16 shrink-0 font-mono text-[11px] text-subtle">{c.date}</span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-medium text-fg">{c.name}</span>
+                  <span className="block text-xs text-subtle">{c.area} · TCS internal</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Reveal>
+
       <Reveal>
         <div className="card mt-6 flex items-center gap-4 p-5">
           <GraduationCap className="h-6 w-6 text-cyan" aria-hidden />
