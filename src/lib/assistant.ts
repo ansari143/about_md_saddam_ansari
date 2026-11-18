@@ -86,7 +86,7 @@ const intents: Intent[] = [
     answer: () => ({
       text: [
         `${profile.displayName} is an ${profile.title} with ${profile.yearsExperience} years of enterprise software engineering across the United States, Canada, the United Kingdom and India.`,
-        `${firstName} progressed from developer to technical lead to architect, and today architects an Enterprise AI & Agentic Platform: one secure AI experience for employee knowledge, productivity and actions.${metricLine}`,
+        `${firstName} progressed from developer to technical lead to architect. Today ${firstName} personally builds and compares agentic AI prototypes, designs enterprise knowledge retrieval and grounding, and guides technical leads and senior developers from proof of concept to production.${metricLine}`,
       ],
       actions: compact([actions.section("about", "Read the full story"), actions.book()]),
     }),
@@ -152,7 +152,7 @@ const intents: Intent[] = [
       bullets: [
         "Production-oriented RAG and enterprise search: ingestion, chunking, embeddings, vector/hybrid retrieval, reranking, grounding and citations.",
         "LangGraph stateful and multi-agent workflows with checkpoints, retries, human approvals and MCP-based integrations.",
-        "Hybrid architecture that keeps established Dialogflow/NLP intent flows while adding LLM retrieval, agent routing and secure tool calling.",
+        "Prototyped a fully agentic redesign and a hybrid routing architecture, then chose hybrid to reduce LLM calls, lower latency and preserve existing workflows. Known requests go to an agent orchestrator (agents or MCP tools); others use LLM or Dialogflow intent classification, with RAG as the fallback.",
         "Guardrails, governed workflows and observability (Langfuse, OpenTelemetry, Datadog) for AI in production.",
       ],
       actions: [actions.section("architecture", "See reference architectures"), actions.section("projects", "View projects")],
@@ -168,8 +168,8 @@ const intents: Intent[] = [
     answer: () => ({
       text: [`${firstName} guides cloud-native and DevSecOps architecture on Microsoft Azure:`],
       bullets: [
-        "Azure/AKS microservices, Docker, API Management, Service Bus, Functions and Key Vault.",
-        "Identity and access: OAuth 2.0/OIDC, JWT, SSO, Microsoft Entra ID, RBAC and least privilege.",
+        "Azure/AKS microservices, Docker, Azure API Management, Azure Functions and Azure Service Bus.",
+        "Identity and access: OAuth 2.0, OIDC, JWT, SSO, Entra ID, RBAC and least privilege.",
         "Security gates in CI/CD (Veracode, SonarQube, Black Duck) and penetration-test remediation.",
         "Event-driven processing with Azure Service Bus and Apache Kafka: retries, dead-letter handling, fault isolation.",
         "Observability: distributed tracing, Datadog, Application Insights and production readiness.",
@@ -284,8 +284,8 @@ const intents: Intent[] = [
   {
     id: "contact",
     keywords: [
-      "contact", "email", "reach", "hire", "hiring", "interview", "call", "meeting", "meet", "schedule",
-      "book", "calendly", "available", "availability", "talk", "connect", "phone", "opportunity",
+      "contact", "email", "reach", "phone", "number", "mobile", "cell", "hire", "hiring", "interview", "call", "meeting", "meet", "schedule",
+      "book", "calendly", "available", "availability", "talk", "connect", "opportunity",
     ],
     answer: () => ({
       text: [
@@ -293,6 +293,7 @@ const intents: Intent[] = [
           ? `The quickest way is to book a time on ${firstName}'s calendar. You can also email ${profile.email} or connect on LinkedIn.`
           : `You can email ${profile.email} or connect on LinkedIn.`,
       ],
+      bullets: profile.phones.map((p) => `${p.label}: ${p.display}`),
       actions: compact([actions.book(), actions.email(), actions.linkedin()]),
     }),
   },
@@ -321,8 +322,8 @@ const intents: Intent[] = [
       bullets: [
         "Personally designs solution patterns, then guides developers through implementation and technical reviews.",
         "Leads architecture and design reviews and mentors engineers.",
-        "Coordinated technical reviews across distributed teams and produced HLD/LLD, API contracts and runbooks.",
-        "Trained and onboarded 25+ team members.",
+        "Led design reviews across distributed teams; produced high- and low-level designs, API contracts and runbooks.",
+        "Trained and onboarded more than 25 team members.",
       ],
     }),
   },

@@ -12,8 +12,6 @@ export const disclosure = {
    * Set to false if these are not approved for public disclosure.
    */
   showImpactMetrics: true,
-  /** Show the end client's name on the current engagement. Off by default. */
-  showClientName: false,
 } as const;
 
 /* --------------------------------- Profile --------------------------------- */
@@ -25,6 +23,8 @@ export type Profile = {
   tagline: string;
   location: string;
   email: string;
+  /** Phone numbers shown on the site and in the AI assistant. The first is preferred for calls. */
+  phones: { label: string; display: string; tel: string }[];
   linkedin: string;
   /** Leave empty until the GitHub username is known; the link is hidden while empty. */
   githubUsername: string;
@@ -45,9 +45,13 @@ export const profile: Profile = {
   displayName: "Md Saddam Ansari",
   title: "Enterprise AI Architect",
   tagline:
-    "I design secure, production-grade GenAI and agentic systems for the enterprise — and guide engineering teams from architecture to delivery.",
+    "I build and compare agentic AI prototypes, design enterprise knowledge retrieval and grounding, and guide engineering teams from proof of concept through production.",
   location: "Tampa, Florida, USA",
   email: "saddamansari52@gmail.com",
+  phones: [
+    { label: "U.S. (preferred for calls)", display: "+1 (813) 388-3285", tel: "+18133883285" },
+    { label: "Canada", display: "+1 (647) 818-6234", tel: "+16478186234" },
+  ],
   linkedin: "https://www.linkedin.com/in/md-ansari-685b6318/",
   githubUsername: "",
   resumePath: "/resume.pdf",
@@ -57,8 +61,8 @@ export const profile: Profile = {
   // Computed at build time: years since careerStartYear (14+ in 2026).
   yearsExperience: `${new Date().getFullYear() - 2012}+`,
   workAuthorization: [
-    "Canadian citizen — eligible to work in Canada without a work permit.",
-    "United States — employment requires appropriate TN work authorization, subject to role eligibility.",
+    "Canadian citizen — authorized to work in Canada.",
+    "United States — TN work authorization required.",
   ],
 };
 
@@ -102,8 +106,8 @@ export const heroStats: Stat[] = [
 
 export const about = {
   intro: [
-    "I'm an Enterprise AI Architect with 14+ years of enterprise software engineering across the United States, Canada, the United Kingdom and India. My career has moved deliberately from developer to technical lead to architect — so the designs I produce are shaped by having written, shipped and supported production code myself.",
-    "Today I architect an Enterprise AI & Agentic Platform: a single, secure AI experience that brings knowledge, productivity, employee services and actions together, so employees can complete everyday tasks without switching between multiple enterprise systems.",
+    "I'm an Enterprise AI Architect with 14+ years of software engineering across the United States, Canada, the United Kingdom and India. My career has moved from developer to technical lead to architect, so my designs are shaped by having written, shipped and supported production code myself.",
+    "Today I personally build and compare agentic AI prototypes, design enterprise knowledge retrieval and grounding solutions, and guide technical leads and senior developers from proof of concept through production delivery. I mentor engineers through design reviews and hands-on troubleshooting.",
   ],
   philosophy: [
     {
@@ -129,6 +133,7 @@ export const about = {
     { year: "2015", role: "Senior Developer", place: "London, UK" },
     { year: "2016", role: "Senior Developer / Technical Lead", place: "Bengaluru, India" },
     { year: "2018", role: "Technical Lead", place: "Toronto, Canada" },
+    { year: "2021", role: "Technical Architect", place: "Toronto, Canada" },
     { year: "2023", role: "AI Technical Architect", place: "Tampa, USA" },
   ],
 };
@@ -153,54 +158,57 @@ export const employer = {
   period: "2012 – Present",
 };
 
-const currentContext = disclosure.showClientName
-  ? "Enterprise AI & Agentic Platform · PwC client engagement via TCS"
-  : "Enterprise AI & Agentic Platform · Client engagement via TCS";
-
 export const experience: Role[] = [
   {
     title: "AI Technical Architect",
     focus: "Enterprise AI & Agentic Platform",
     location: "Tampa, FL, USA",
     period: "2023 – Present",
-    context: currentContext,
     ownership:
-      "Architecture owner for conversational, GenAI, RAG and agentic capabilities; technical guide for the engineering teams implementing them.",
+      "Architect of AI agents, tools, retrieval and conversational AI for the platform; guide technical leads and senior developers from prototype to production.",
     highlights: [
-      "Personally design hybrid conversational and GenAI architecture — preserving established Dialogflow/NLP intent flows while introducing LLM retrieval, agent routing, secure tool calling and governed workflows — and guide developers through implementation and technical reviews.",
-      "Design and guide implementation of production-oriented RAG and enterprise search pipelines across structured and unstructured content: ingestion, chunking, embeddings, vector/hybrid retrieval, reranking, grounding and response citations.",
-      "Architect LangGraph stateful and multi-agent workflows with checkpoints, retries, human approvals and MCP-based integrations, guiding engineering through secure, auditable multi-step actions.",
-      "Design secure API integrations across Microsoft Graph, SharePoint, OneDrive, ServiceNow, Workday, Salesforce, SAP Concur and other enterprise systems to reduce fragmented employee workflows.",
-      "Guide Azure/AKS microservice architecture and enterprise DevSecOps: OAuth/OIDC, Entra ID, least-privilege access, Veracode and SonarQube gates, penetration-test remediation, distributed tracing, Datadog, Application Insights, CI/CD and production readiness.",
-      "Guide developers in AI-assisted engineering with Claude Code, Cursor and GitHub Copilot — rapid feature development, automated code-review/fix-agent patterns, debugging, testing and safe deployment; lead architecture/design reviews and mentor engineers.",
+      "Prototyped a fully agentic redesign and a hybrid routing architecture for an enterprise employee assistant, and selected the hybrid design to reduce LLM calls, lower routing latency and preserve existing workflows. Regex rules send known requests to an agent orchestrator that invokes agents or MCP tools; other requests use LLM or Dialogflow intent classification, with enterprise RAG as the fallback.",
+      "Guide technical leads and senior developers in turning prototypes into production features. Lead design reviews, explain architecture decisions, and help resolve implementation and integration issues.",
+      "Design hybrid conversational AI that combines Dialogflow with LLM-powered retrieval, agent routing and secure tool calling. Design RAG pipelines for ingestion, chunking, embeddings, hybrid search, reranking, grounding and source citations.",
+      "Architect stateful and multi-agent LangGraph workflows with checkpoints, retries, human approvals and Model Context Protocol (MCP) integrations. Guide secure integrations with Microsoft Graph, SharePoint, OneDrive, Workday, ServiceNow, Salesforce and SAP Concur.",
+      "Guide Azure and AKS microservice architecture, least-privilege access, CI/CD security gates, penetration-test remediation, tracing and monitoring. Evaluate workflow performance, reliability and AI guardrails.",
+      "Mentor engineers on agent design and AI-assisted prototyping, debugging, testing, and automated code review and fix-agent patterns.",
     ],
     metricHighlights: [
-      "Architect AI and agentic capabilities for a unified employee experience platform supporting approximately 100,000 employees and 30,000 daily active users.",
-      "Designed and guided unified AI workflows that reduced time employees spend navigating multiple enterprise systems, contributing to an estimated 30–35% employee time savings on supported daily tasks.",
+      "Architect AI agents and tools for a unified employee platform supporting approximately 100,000 employees and 30,000 daily active users, bringing enterprise knowledge, employee services and actions across business systems into one experience.",
+      "Designed unified AI workflows that contributed to an estimated 30–35% time savings on supported daily employee tasks.",
     ],
     tech: [
-      "LangGraph", "LangChain", "RAG", "MCP", "Azure OpenAI", "Dialogflow", "Python", "FastAPI",
-      "Azure", "AKS", "Entra ID", "Datadog", "Langfuse", "OpenTelemetry",
+      "LangGraph", "LangChain", "MCP", "RAG", "Azure OpenAI", "Dialogflow", "Python",
+      "Azure", "AKS", "Microsoft Graph", "Langfuse", "OpenTelemetry",
     ],
+  },
+  {
+    title: "Technical Architect",
+    focus: "Conversational AI & Enterprise Integrations",
+    location: "Toronto, Canada",
+    period: "Apr 2021 – Jul 2023",
+    highlights: [
+      "Designed conversational AI architecture across web and mobile channels, including Dialogflow intent classification, entity extraction, multi-turn dialogue and fulfillment.",
+      "Defined API contracts and data flows connecting conversational experiences to backend systems through reusable REST APIs and Node.js and TypeScript microservices.",
+      "Designed event-driven integrations using Azure Service Bus and Apache Kafka, with retries, dead-letter handling and fault isolation.",
+      "Guided security, performance, deployment automation and production readiness decisions, including OAuth, JWT, SSO, Datadog and Azure Application Insights.",
+      "Produced high- and low-level designs, deployment guidance and operational runbooks. Led design reviews across distributed teams and coached developers on integration patterns and troubleshooting.",
+    ],
+    tech: ["Dialogflow", "Node.js", "TypeScript", "REST APIs", "Azure Service Bus", "Kafka", "OAuth/JWT", "Datadog"],
   },
   {
     title: "Technical Lead",
     focus: "Conversational AI & Enterprise Integrations",
     location: "Toronto, Canada",
-    period: "2018 – 2023",
-    ownership:
-      "Led design and engineering of employee-facing web, mobile, conversational and integration capabilities.",
+    period: "Oct 2018 – Apr 2021",
     highlights: [
-      "Led design and engineering of employee-facing web, mobile, conversational and enterprise integration capabilities using Dialogflow, Node.js, TypeScript, Express.js, Angular, MongoDB, Redis and Azure.",
-      "Designed intent detection, entity extraction, fulfillment, multi-turn conversational flows, reusable REST APIs and backend microservices.",
-      "Designed and guided event-driven, asynchronous processing with Azure Service Bus and Apache Kafka, including retries, dead-letter handling, fault isolation and reliable downstream processing.",
-      "Guided enterprise security scanning, OAuth/JWT/SSO, Veracode/SonarQube remediation, Datadog/Application Insights monitoring, performance diagnostics, deployment automation and production incident resolution.",
-      "Produced HLD/LLD, API contracts, deployment documentation and operational runbooks; coordinated technical reviews across distributed engineering teams.",
+      "Led delivery and worked alongside developers to build employee-facing web, mobile and conversational features using Dialogflow, Node.js, TypeScript, Express.js, Python, Angular, MongoDB, Redis and Azure.",
+      "Personally built backend services and reusable REST APIs, and implemented complex features for multi-turn conversations, fulfillment and downstream enterprise integrations.",
+      "Helped developers troubleshoot service failures, integration defects and performance issues. Investigated root causes, reviewed fixes, and supported deployment and production incident resolution.",
+      "Coordinated code reviews and cross-team delivery. Guided security remediation and deployment automation.",
     ],
-    tech: [
-      "Dialogflow", "Node.js", "TypeScript", "Express.js", "Angular", "MongoDB", "Redis",
-      "Azure Service Bus", "Kafka", "OAuth/JWT", "Veracode", "SonarQube",
-    ],
+    tech: ["Dialogflow", "Node.js", "TypeScript", "Express.js", "Python", "Angular", "MongoDB", "Redis", "Azure"],
   },
   {
     title: "Technical Lead",
@@ -208,18 +216,18 @@ export const experience: Role[] = [
     location: "Bengaluru, India",
     period: "2017 – 2018",
     highlights: [
-      "Guided MVP design, front-end/back-end integration, REST API delivery, cloud deployment, engineering standards, code reviews and release readiness.",
-      "Partnered with business and engineering stakeholders to resolve design tradeoffs, integration issues and complex application defects.",
+      "Guided MVP delivery across front-end and back-end integration, REST APIs, cloud deployment, code reviews and release readiness.",
+      "Worked with stakeholders to resolve design tradeoffs, integration issues and complex defects.",
     ],
-    tech: ["REST APIs", "Cloud deployment", "Code review", "Engineering standards"],
+    tech: ["REST APIs", "Cloud deployment", "Code review"],
   },
   {
     title: "Senior Developer / Technical Lead",
     location: "Bengaluru, India",
     period: "2016 – 2017",
     highlights: [
-      "Led enterprise application enhancements, technical estimation, environment upgrades, security patching, production releases, root-cause analysis and technical handovers.",
-      "Served as a technical contact across applications and trained/onboarded 25+ team members.",
+      "Led application enhancements, technical estimation, environment upgrades, security patching, releases and root-cause analysis.",
+      "Coordinated technical handovers and trained and onboarded more than 25 team members.",
     ],
     tech: ["Release management", "Security patching", "Root-cause analysis"],
   },
@@ -228,16 +236,16 @@ export const experience: Role[] = [
     location: "London, United Kingdom",
     period: "2015 – 2016",
     highlights: [
-      "Developed enterprise application enhancements and supported unit testing, SIT/UAT, defect resolution, deployment validation and production handover.",
+      "Developed enterprise application enhancements, resolved defects, supported unit, integration and acceptance testing, and validated deployments and production handovers.",
     ],
-    tech: ["SIT/UAT", "Deployment validation"],
+    tech: ["Testing", "Deployment validation"],
   },
   {
     title: "Developer",
     location: "Bengaluru, India",
     period: "2013 – 2015",
     highlights: [
-      "Built and maintained Lotus Notes enterprise applications; implemented requirements, tests, defect fixes and releases across business-facing systems.",
+      "Built and maintained Lotus Notes enterprise applications. Implemented business requirements, tested changes, resolved defects and supported releases.",
     ],
     tech: ["Lotus Notes"],
   },
@@ -246,7 +254,7 @@ export const experience: Role[] = [
     location: "Ahmedabad, India",
     period: "2012 – 2013",
     highlights: [
-      "Completed technical training in Java, ETL, Informatica, Business Objects, UML, testing and software documentation.",
+      "Completed training in Java, ETL, Informatica, Business Objects, UML, software testing and technical documentation.",
     ],
     tech: ["Java", "ETL", "Informatica", "UML"],
   },
@@ -258,64 +266,62 @@ export type SkillGroup = { title: string; icon: string; skills: string[] };
 
 export const expertise: SkillGroup[] = [
   {
-    title: "GenAI & Agents",
+    title: "Generative AI & Retrieval",
     icon: "brain",
     skills: [
-      "LLMs", "Azure OpenAI", "GPT model evaluation", "RAG", "Embeddings & chunking",
-      "Vector / hybrid search", "Reranking & grounding", "LangGraph", "LangChain",
-      "Multi-agent orchestration", "Tool / function calling", "MCP client/server", "Human-in-the-loop",
-      "AI guardrails", "Prompt engineering",
+      "Azure OpenAI", "GPT model evaluation", "Prompt engineering", "LangGraph", "LangChain",
+      "MCP", "Multi-agent workflows", "Human-in-the-loop", "AI guardrails", "RAG",
+      "Vector & hybrid search", "Reranking & grounding", "MongoDB Atlas Vector Search", "Elasticsearch",
     ],
   },
   {
-    title: "Conversational & Workflow",
+    title: "Conversational AI",
     icon: "messages",
     skills: [
-      "Google Dialogflow", "Intent & entity extraction", "Hybrid NLP/LLM routing",
-      "Stateful workflows", "Checkpoints & retries", "BPMN / DMN", "Camunda",
+      "Dialogflow", "Intent classification", "Entity extraction", "Multi-turn dialogue", "Fulfillment",
+      "Hybrid LLM / intent routing",
     ],
   },
   {
-    title: "Cloud & Integration",
+    title: "Cloud & Application Engineering",
     icon: "cloud",
     skills: [
-      "Microsoft Azure", "AKS / Kubernetes", "Docker", "Azure API Management", "Service Bus",
-      "Azure Functions", "Key Vault", "REST / OpenAPI", "Microservices", "Apache Kafka",
-      "Microsoft Graph", "SharePoint", "ServiceNow", "Workday", "Salesforce", "SAP Concur",
+      "Azure", "AKS", "Kubernetes", "Docker", "Azure API Management", "Azure Functions",
+      "Azure Service Bus", "Kafka", "REST / OpenAPI", "Terraform",
     ],
   },
   {
-    title: "Software & Data",
+    title: "Languages & Frameworks",
     icon: "code",
     skills: [
-      "Python", "FastAPI", "Node.js", "TypeScript", "JavaScript", "React", "Next.js", "Angular",
-      "Java / Spring Boot", "MongoDB", "Atlas Vector Search", "Elasticsearch", "Redis",
-      "PostgreSQL", "SQL Server", "Terraform",
+      "Python", "FastAPI", "Node.js", "TypeScript", "Express.js", "Angular", "React", "Next.js",
+      "MongoDB", "Redis",
     ],
   },
   {
-    title: "Security & DevSecOps",
+    title: "Enterprise Integrations",
+    icon: "plug",
+    skills: ["Microsoft Graph", "SharePoint", "OneDrive", "Workday", "ServiceNow", "Salesforce", "SAP Concur"],
+  },
+  {
+    title: "Security & Delivery",
     icon: "shield",
     skills: [
-      "OAuth 2.0 / OIDC", "JWT / SSO", "Microsoft Entra ID", "RBAC & least privilege",
-      "Secrets management", "Secure tool execution", "CI/CD", "Azure DevOps", "GitHub",
+      "OAuth 2.0", "OIDC", "JWT", "SSO", "Entra ID", "RBAC", "CI/CD", "Azure DevOps", "GitHub",
       "Veracode", "SonarQube", "Black Duck", "Pen-test remediation",
     ],
   },
   {
     title: "Observability",
     icon: "activity",
-    skills: [
-      "OpenTelemetry", "Datadog", "Application Insights", "Langfuse", "Distributed tracing",
-      "Monitoring", "Release controls",
-    ],
+    skills: ["OpenTelemetry", "Datadog", "Azure Application Insights", "Langfuse", "Tracing & monitoring"],
   },
   {
     title: "AI-Assisted Engineering",
     icon: "sparkles",
     skills: [
-      "Claude Code", "Cursor", "GitHub Copilot", "Microsoft Copilot", "ChatGPT",
-      "Automated PR review", "Fix-agent patterns", "Test generation", "Azure DevOps / Jira MCP",
+      "Claude Code", "Cursor", "GitHub Copilot", "Microsoft Copilot", "Automated code review",
+      "Fix-agent patterns", "AI-assisted prototyping",
     ],
   },
 ];
@@ -346,9 +352,9 @@ export const projects: Project[] = [
     challenge:
       "Employees had to navigate multiple enterprise systems to find information and complete routine tasks.",
     approach: [
-      "Hybrid architecture that keeps established Dialogflow/NLP intent flows and adds LLM retrieval and agent routing.",
+      "Prototyped a fully agentic redesign and a hybrid routing design, then chose hybrid to cut LLM calls, lower routing latency and preserve existing workflows.",
+      "Regex rules send known requests to an agent orchestrator (agents or MCP tools); other requests use LLM or Dialogflow intent classification, with RAG as the fallback.",
       "Enterprise knowledge retrieval with hybrid search, reranking, grounding and cited responses.",
-      "LangGraph agent orchestration with checkpoints, retries and human approval for sensitive actions.",
       "Secure, least-privilege integrations with systems of record via governed APIs and MCP-based tools.",
     ],
     outcome:
@@ -386,10 +392,10 @@ export const projects: Project[] = [
     challenge:
       "Make quality practice material and career guidance easy for learners to access.",
     approach: [
-      "Designed, built and deployed the site with Next.js, React and Vercel.",
+      "Personally designed, built and deployed the site with Next.js, React and Vercel.",
       "Developed and integrated Python/LangGraph-based AI agents.",
       "Owned solution design, integration, testing, deployment and iterative enhancements.",
-      "Used Claude Code and GitHub Copilot to speed up implementation and debugging.",
+      "Used Claude Code and GitHub Copilot to prototype features and debug issues.",
     ],
     outcome: "Live and maintained as an after-hours personal initiative to help learners.",
     tags: ["Next.js", "React", "Python", "LangGraph", "Vercel", "Claude Code"],

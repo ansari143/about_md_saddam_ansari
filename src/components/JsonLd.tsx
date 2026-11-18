@@ -10,6 +10,7 @@ export function JsonLd({ hasPhoto }: { hasPhoto: boolean }) {
     description: siteDescription,
     url: siteUrl,
     email: `mailto:${profile.email}`,
+    telephone: profile.phones[0]?.display,
     ...(hasPhoto ? { image: `${siteUrl}${profile.photoPath}` } : {}),
     address: {
       "@type": "PostalAddress",

@@ -1,4 +1,4 @@
-import { ArrowUpRight, CalendarDays, Mail, MapPin } from "lucide-react";
+import { ArrowUpRight, CalendarDays, Mail, MapPin, Phone } from "lucide-react";
 import { githubUrl, profile } from "@/data/site";
 import { GitHubIcon, LinkedInIcon } from "../ui/BrandIcons";
 import { AskAIButton } from "../AskAIButton";
@@ -26,6 +26,13 @@ export function Contact() {
       icon: <Mail className="h-5 w-5" aria-hidden />,
       external: false,
     },
+    ...profile.phones.map((p) => ({
+      label: p.label,
+      value: p.display,
+      href: `tel:${p.tel}`,
+      icon: <Phone className="h-5 w-5" aria-hidden />,
+      external: false,
+    })),
     {
       label: "LinkedIn",
       value: "in/md-ansari-685b6318",

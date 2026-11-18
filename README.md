@@ -35,17 +35,13 @@ All content lives in one typed file: [`src/data/site.ts`](src/data/site.ts).
 
 Put the PDF at `public/resume.pdf`. The site detects it at build time and shows an inline preview plus download buttons. While the file is missing, the Resume section shows a "Request resume" email button instead.
 
-> Before publishing a resume, remove anything you don't want public (for example a phone number). Everything in `public/` is downloadable by anyone.
+> Everything in `public/` is downloadable by anyone, including the phone numbers in the resume.
 
-The published `public/resume.pdf` is generated from [`resume-source/resume.html`](resume-source/resume.html). That is a public-safe copy of the resume with no phone number and no client name. To regenerate it after editing the HTML, print it to PDF with headless Chrome or Edge, for example:
-
-```bash
-chrome --headless=new --no-pdf-header-footer --print-to-pdf=public/resume.pdf resume-source/resume.html
-```
+The published `public/resume.pdf` is your own resume file, copied in as-is. To update it, replace that file and run `npm run deploy`.
 
 ### Public-disclosure flags
 
-`disclosure.showImpactMetrics` controls the ~100,000 employee reach, 30,000 daily active users and estimated 30–35% employee time-savings figures. Set it to `false` if those figures are not approved for public use. `disclosure.showClientName` is `false` by default.
+`disclosure.showImpactMetrics` controls the ~100,000 employee reach, 30,000 daily active users and estimated 30–35% employee time-savings figures. Set it to `false` if those figures are not approved for public use.
 
 ## Local development
 

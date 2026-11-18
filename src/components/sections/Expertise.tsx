@@ -1,4 +1,4 @@
-import { Activity, Brain, Cloud, Code, MessagesSquare, Shield, Sparkles, type LucideIcon } from "lucide-react";
+import { Activity, Brain, Cloud, Code, MessagesSquare, Plug, Shield, Sparkles, type LucideIcon } from "lucide-react";
 import { expertise } from "@/data/site";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
@@ -10,6 +10,7 @@ const iconMap: Record<string, LucideIcon> = {
   code: Code,
   shield: Shield,
   activity: Activity,
+  plug: Plug,
   sparkles: Sparkles,
 };
 
