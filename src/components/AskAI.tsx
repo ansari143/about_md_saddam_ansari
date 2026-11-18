@@ -240,7 +240,7 @@ export function AskAI() {
               </button>
             </header>
 
-            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite" aria-relevant="additions">
+            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 [scrollbar-color:var(--border-strong)_transparent] [scrollbar-width:thin]" aria-live="polite" aria-relevant="additions">
               <BotBubble content={welcome} onNavigate={onNavigate} />
               {messages.length === 0 && (
                 <div className="flex flex-wrap gap-2 pt-1" aria-label="Suggested questions">
@@ -294,7 +294,7 @@ export function AskAI() {
             </div>
 
             <form onSubmit={onSubmit} className="border-t border-line p-3">
-              <div className="flex items-center gap-2 rounded-xl border border-line-strong bg-surface px-3 focus-within:border-cyan/70">
+              <div className="flex items-center gap-2 rounded-xl border border-line-strong bg-surface py-1 pr-1.5 pl-3.5 transition-[border-color,box-shadow] duration-150 focus-within:border-cyan focus-within:shadow-[0_0_0_3px_color-mix(in_srgb,var(--cyan)_18%,transparent)]">
                 <label htmlFor="ask-ai-input" className="sr-only">
                   Ask a question about {profile.displayName}
                 </label>
@@ -306,13 +306,13 @@ export function AskAI() {
                   placeholder="Ask about experience, skills, availability…"
                   autoComplete="off"
                   maxLength={300}
-                  className="h-11 min-w-0 flex-1 bg-transparent text-sm text-fg placeholder:text-subtle focus:outline-none"
+                  className="h-10 min-w-0 flex-1 appearance-none border-0 bg-transparent text-base text-fg shadow-none placeholder:text-subtle focus:outline-none focus-visible:outline-none sm:text-sm"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || typing}
                   aria-label="Send question"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-accent-fg transition-opacity disabled:opacity-40"
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-fg transition-colors hover:brightness-110 disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-subtle disabled:hover:brightness-100"
                 >
                   <SendHorizontal className="h-4 w-4" aria-hidden />
                 </button>
