@@ -17,6 +17,8 @@ import {
   expertise,
   profile,
   projects,
+  targetRegions,
+  targetRoles,
 } from "@/data/site";
 
 export type ChatAction = {
@@ -101,6 +103,18 @@ const intents: Intent[] = [
         "Observable and production-ready: tracing, monitoring and evaluation designed in.",
       ],
       actions: [actions.section("about", "Go to About")],
+    }),
+  },
+  {
+    id: "target-roles",
+    keywords: [
+      "open to", "looking for", "seeking", "target role", "target roles", "interested in", "next role",
+      "what roles", "which roles", "kind of role", "kind of roles", "type of role", "positions", "opportunities", "job titles", "titles",
+    ],
+    answer: () => ({
+      text: [`${firstName} is open to Enterprise AI Architect and senior AI architecture roles in ${targetRegions}, including:`],
+      bullets: [...targetRoles, ...profile.workAuthorization],
+      actions: compact([actions.book(), actions.resume(), actions.email()]),
     }),
   },
   {
@@ -550,6 +564,7 @@ export const welcome: ChatAnswer = {
 
 export const suggestions: { label: string; question: string }[] = [
   ...(profile.bookingUrl ? [{ label: "📅 Book a call", question: "How can I schedule a call?" }] : []),
+  { label: "🎯 Open to roles", question: "What roles is Saddam open to?" },
   { label: "💼 Current role", question: "What is Saddam doing now?" },
   { label: "🤖 Agents & routing", question: "Tell me about multi-agent and agent routing experience" },
   { label: "📚 RAG", question: "How does Saddam design RAG pipelines?" },

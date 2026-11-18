@@ -1,5 +1,5 @@
 import { Compass, Eye, Layers, ShieldCheck } from "lucide-react";
-import { about, education, profile } from "@/data/site";
+import { about, education, profile, targetRegions, targetRoles } from "@/data/site";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 
@@ -17,7 +17,18 @@ export function About({ hasPhoto }: { hasPhoto: boolean }) {
           ))}
           <Reveal>
             <div className="card mt-8 p-5">
-              <h3 className="text-sm font-semibold text-fg">Work authorization</h3>
+              <h3 className="text-sm font-semibold text-fg">Open to roles</h3>
+              <p className="mt-1 text-sm text-muted">
+                Enterprise AI Architect and senior AI architecture roles in {targetRegions}:
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Roles I'm open to">
+                {targetRoles.map((r) => (
+                  <li key={r} className="rounded-full border border-line bg-surface-2 px-2.5 py-0.5 text-xs text-fg">
+                    {r}
+                  </li>
+                ))}
+              </ul>
+              <h3 className="mt-5 text-sm font-semibold text-fg">Work authorization</h3>
               <ul className="mt-2 space-y-1 text-sm text-muted">
                 {profile.workAuthorization.map((w) => (
                   <li key={w}>{w}</li>

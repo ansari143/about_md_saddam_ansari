@@ -1,5 +1,5 @@
 import { ArrowUpRight, CalendarDays, Mail, MapPin, Phone } from "lucide-react";
-import { githubUrl, profile } from "@/data/site";
+import { githubUrl, profile, targetRegions, targetRoles } from "@/data/site";
 import { GitHubIcon, LinkedInIcon } from "../ui/BrandIcons";
 import { AskAIButton } from "../AskAIButton";
 import { CopyEmailButton } from "../CopyEmailButton";
@@ -68,8 +68,15 @@ export function Contact() {
               Hiring for enterprise AI architecture? Let&apos;s talk.
             </h2>
             <p className="mt-4 max-w-2xl text-muted">
-              Open to Enterprise AI Architect and senior AI architecture roles in the United States and Canada.
+              Open to Enterprise AI Architect and senior AI architecture roles in {targetRegions}, including:
             </p>
+            <ul className="mt-4 flex max-w-3xl flex-wrap gap-2" aria-label="Roles I'm open to">
+              {targetRoles.map((r) => (
+                <li key={r} className="rounded-full border border-cyan/30 bg-surface-2/70 px-3 py-1 text-sm text-fg">
+                  {r}
+                </li>
+              ))}
+            </ul>
             <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-subtle">
               <MapPin className="h-3.5 w-3.5" aria-hidden /> {profile.location}
             </p>

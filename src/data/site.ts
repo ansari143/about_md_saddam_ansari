@@ -105,6 +105,19 @@ export const heroStats: Stat[] = [
 /** Focus areas from the resume headline. */
 export const focusAreas = ["Enterprise AI Architect", "Generative AI", "Agentic AI", "Engineering Enablement"];
 
+/** Role titles Saddam is open to. Shown in About, Contact and the AI assistant. */
+export const targetRoles = [
+  "Enterprise AI Architect",
+  "AI Technical Architect",
+  "AI Agent Architect",
+  "AI / LLM Technology Architect",
+  "Solutions Architect (Agentic AI / GenAI)",
+  "Generative AI Architect",
+  "Agentic AI Architect",
+];
+
+export const targetRegions = "the United States and Canada";
+
 /* ---------------------------------- About --------------------------------- */
 
 export const about = {
